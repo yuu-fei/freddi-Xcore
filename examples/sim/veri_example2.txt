@@ -1,0 +1,79 @@
+// DESCRIPTION: Verilator: Verilog example module
+//
+// This file ONLY is placed under the Creative Commons Public Domain, for
+// any use, without warranty, 2017 by Wilson Snyder.
+// SPDX-License-Identifier: CC0-1.0
+//======================================================================
+
+// Include common routines
+#include <verilated.h>
+#include <nvboard.h>
+// Include model header, generated from Verilating "top.v"
+#include "Vtop.h"
+// Construct the Verilated model, from Vtop.h generated from Verilating "top.v"
+
+double sc_time_stamp() { return 0; }
+void nvboard_bind_all_pins(Vtop* top);
+void single_cycle(Vtop* top) {
+  top->clk = 0; top->eval();
+  top->clk = 1; top->eval();
+}
+/*void reset(int n) {
+  top->rst = 1;
+  while (n -- > 0) single_cycle();
+  top->rst = 0;
+}
+void reset_n(int n) {
+  top->rst_n = 0;
+  while (n -- > 0) single_cycle();
+  top->rst_n = 1;
+}*/
+
+int main(int argc, char** argv, char** env) {
+    // See a similar example walkthrough in the verilator manpage.
+
+    // This is intended to be a minimal example.  Before copying this to start a
+    // real project, it is better to start with a more complete example,
+    // e.g. examples/c_tracing.
+
+    // Prevent unused variable warnings
+    if (false && argc && argv && env) {}
+    // Using unique_ptr is similar to
+    // "VerilatedContext* contextp = new VerilatedContext" then deleting at end.
+    const std::unique_ptr<VerilatedContext> contextp{new VerilatedContext};
+    // Verilator must compute traced signals
+    contextp->traceEverOn(true);
+    // Set debug level, 0 is off, 9 is highest presently used
+    // May be overridden by commandArgs argument parsing
+    contextp->debug(0);
+
+    // Randomization reset policy
+    // May be overridden by commandArgs argument parsing
+    contextp->randReset(2);
+
+    // Pass arguments so Verilated code can see them, e.g. $value$plusargs
+    // This needs to be called before you create any model
+    contextp->commandArgs(argc, argv);
+    
+
+    Vtop* top = new Vtop;
+
+    nvboard_bind_all_pins(top);
+	  nvboard_init();
+
+    while (!contextp->gotFinish()) {
+    	contextp->timeInc(1); 
+    	//top->eval();
+    	single_cycle(top);
+	    nvboard_update();
+    }
+
+    // Final model cleanup
+    top->final();
+
+    // Destroy model
+    delete top;
+
+    // Return good completion status
+    return 0;
+}

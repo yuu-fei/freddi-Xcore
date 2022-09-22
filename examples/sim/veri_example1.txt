@@ -1,0 +1,40 @@
+#include "verilated_vcd_c.h" 
+#include "VAccumulator.h"
+ 
+vluint64_t main_time = 0;  
+ 
+double sc_time_stamp()
+{
+    return main_time;
+}
+ 
+int main(int argc, char **argv)
+{
+    Verilated::commandArgs(argc, argv); 
+    Verilated::traceEverOn(true); 
+ 
+    VerilatedVcdC* tfp = new VerilatedVcdC;
+ 
+    VAccumulator *top = new VAccumulator("top"); 
+ 
+    top->trace(tfp, 0);   
+    tfp->open("wave.vcd"); 
+ 
+    while (sc_time_stamp() < 20 && !Verilated::gotFinish()) { 
+        top->io_din_0 = main_time + 0; 
+        top->io_din_1 = main_time + 1;
+        top->io_din_2 = main_time + 2;
+        top->io_din_3 = main_time + 3;
+ 
+        top->eval(); 
+ 
+        printf("%d + %d + %d + %d = %d\n",top->io_din_0,top->io_din_1,top->io_din_2,top->io_din_3,top->io_dout); 
+        tfp->dump(main_time); 
+        main_time++; 
+    }
+    top->final();
+    tfp->close();
+    delete top;
+ 
+    return 0;
+}
