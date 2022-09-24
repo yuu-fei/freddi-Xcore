@@ -6,10 +6,11 @@ IVERILOG = iverilog
 VERILATOR_FLAGS = -Wall --cc --exe --trace --build -Os -x-assign 0
 IVERILOG_FLAGS = -o
 #execute the target file
-OBJ_DIR_RUN = ./obj_dir/VXcore_gnrl_arbiter1
+OBJ_DIR_RUN = ./obj_dir/VXcore_bpu 
+#you should change above!!!
 VVP = vvp -n dump -lxt2
-#set the file set
-VERILATOR_INPUT = ./rtl/general/Xcore_gnrl_arbiter1.v ./sim/verilator_sim/arbitor_sim.cpp
+#set the file set//here you should change the obj_dir !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+VERILATOR_INPUT = ./rtl/core/Xcore_bpu.v ./sim/verilator_sim/bpu_sim.cpp
 IVERILOG_INPUT = ./rtl/general/Xcore_gnrl_arbiter1.v ./sim/iverilog_sim/arbitor_sim.v
 #set gtkwave to automatically open the vcd file to chexk the waveform
 GTKWAVE = gtkwave
