@@ -16,7 +16,7 @@
 //------------------------------------------------------------------
 
 module Xcore_gnrl_dfflr#(
- parameter DW = 8
+ parameter DW =32
 )(
 input clk,
 input lden,
@@ -26,13 +26,13 @@ output [DW-1:0] dffo
 );
 
 reg [DW-1:0] dffo_reg = {DW{1'b0}};
-always@(posedge clk or negedge reset) begin
+always@(negedge clk or negedge reset) begin
 if(reset==1'b0)
  dffo_reg <= {DW{1'b0}};
  else if(lden == 1'b1)
  dffo_reg <= #1 dtin;
  else
- dffo_reg <= {DW{1'b0}};
+ dffo_reg <= dffo_reg;
 end
 
 assign dffo = dffo_reg;

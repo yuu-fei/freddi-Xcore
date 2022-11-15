@@ -80,7 +80,7 @@ end
 //get output : address and control valid signal
  
 assign bpu_jump_valid =  bpu_valid_en&(~bpu_stop);
-assign bpu_instr_adr =	 cur_instr_pc - {21'b0, off[10:0]};
+assign bpu_instr_adr =	 cur_instr_pc +{{20{off[11]}}, off};
 
 
 endmodule
