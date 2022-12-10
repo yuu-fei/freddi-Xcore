@@ -1,0 +1,7 @@
+#!/usr/bin/env yosys                                                                                      
+ read -sv ./rtl/core/Xcore_gshare_bpu.v
+ hierarchy -top Xcore_gshare_bpu
+ proc; opt; techmap; opt
+ show
+ write_verilog synth.v
+

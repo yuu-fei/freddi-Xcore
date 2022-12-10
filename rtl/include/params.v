@@ -37,7 +37,7 @@
 // RV32IM data lenth
 `define WIDTH 31:0
 `define LEN 32
-
+`define GHRLEN 2
 //Stall Control bit
 `define STWIDTH 1:0
 `define STLEN 2

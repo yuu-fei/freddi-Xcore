@@ -3,24 +3,28 @@
 VERILATOR = verilator
 IVERILOG = iverilog
 #set necessary parameters of commands
-VERILATOR_FLAGS =  --cc --exe --trace --build -Os -x-assign 0 
+VERILATOR_FLAGS =  --cc --exe --trace --build  -x-assign 0 
 IVERILOG_FLAGS = -o
 #execute the target file
 #you also need to change the obj name!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-OBJ_DIR_RUN = ./obj_dir/VXcore_id_regf 
+OBJ_DIR_RUN = ./obj_dir/VXcore_gshare_bpu
 #you should change above!!!
 VVP = vvp -n dump -lxt2
 #set the file set//here you should change the obj_dir !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #remember that all the dependencies should be concluded into the input path
-VERILATOR_INPUT = ./rtl/core/Xcore_id_regf.v  ./rtl/general/Xcore_gnrl_dfflr.v
-VERI_SIM_INPUT = ./sim/verilator_sim/regf_sim.cpp
-IVERILOG_INPUT = ./rtl/core/Xcore_id_regf.v 
-IVER_SIM_INPUT = ./sim/iverilog_sim/regf_sim.v
+VERILATOR_INPUT = ./rtl/core/Xcore_gshare_bpu.v
+VERI_SIM_INPUT = ./sim/verilator_sim/gshare_sim.cpp
+IVERILOG_INPUT = ./rtl/core/Xcore_gshare_bpu.v 
+IVER_SIM_INPUT = ./sim/iverilog_sim/gshare_sim.v
 GLOBAL = ./rtl/include/params.v
 #set gtkwave to automatically open the vcd file to chexk the waveform
 GTKWAVE = gtkwave
 #set gtkwave file
 GTKWAVE_INPUT = dump.vcd
+#yosys synthesis target
+YOSYSFILE = ./rtl/core/Xcore_gshare_bpu.v
+MODULE = 	Xcore_gshare_bpu
+#you need to change the synthesis target!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #verilator simulation
 veri: run gtkwave
 	#verilator simulation finished!
@@ -45,5 +49,13 @@ clean:
 gtkwave:
 	@$(GTKWAVE) $(GTKWAVE_INPUT)
 
+yosys:
+	read -sv $(YOSYSFILE)
+	hierarchy -top $(MODULE)
+	write_ilang
+	proc; opt; techmap; opt
+	show
+	write_verilog synth.v
+	@#techmap; opt   #this is only for logic optimization
 test:
 	#this is a test

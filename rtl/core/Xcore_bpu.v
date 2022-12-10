@@ -31,13 +31,13 @@ input bpu_clk,
 input bpu_rst,
 
 input	[31:0]		cur_instr_pc, //pc of current beq instruction 
-input				    flush_valid,
-input				    stall_valid,
-input	[6:0]		    cur_instr_op,
+input		        flush_valid,
+input		        stall_valid,
+input	[6:0]		cur_instr_op,
 input	[11:0]		instr_b_off,
 input	[11:0]		instr_jar_off,
 
-output				    bpu_jump_valid,
+output			bpu_jump_valid,
 output	[31:0]		bpu_instr_adr
 );
 // jump back taken and jump forward not taken
@@ -61,7 +61,7 @@ assign off = (instr_type==2'b11) ? instr_jar_off : (instr_type==2'b01) ? instr_b
 
 //core code to implement the functon of taking branch jump when it is backward
 //while take not when it is forward...
-assign bpu_valid_en = off[11]|(&instr_type);
+assign bpu_valid_en = off[11]|(&instr_type); //key sentence to finish the function of the bpu!!!!!!!!! 
 
 //check pipeline status
 reg bpu_stop;
