@@ -29,7 +29,7 @@ module Xcore_if_btb(
  //front end update
  input [`WIDTH]		i_bpu_instr_pc,
  input				i_bpu_btb_update,
- input [2:0]		i_bpu_btb_type, // branch 100 jar 010 jalr 001
+ input [2:0]		i_bpu_btb_type, // branch 100 jal 010 jalr 001
  input [`WIDTH]		i_bpu_btb_target,
  input				i_bpu_btb_valid,
  //back end update

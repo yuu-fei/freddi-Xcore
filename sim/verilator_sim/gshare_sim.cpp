@@ -15,6 +15,7 @@ VerilatedContext* contextp = NULL;
 VerilatedVcdC* tfp = NULL;
 static VXcore_gshare_bpu* top;
 vluint64_t main_time = 0;
+vluint64_t i = 0;
 //single eval
 void eval_and_dump_wave(){
 	top->eval();
@@ -71,22 +72,27 @@ int main(){//main simulation here
 	top->i_wb_instr_pc = 0;
 	top->i_wb_cmt_type = 0;
 	top->i_wb_cmt_target = 0;
-
+	
 	reset(10);
-	while((!(main_time>100))&&(!Verilated::gotFinish())){ //here is the loop for simulation,it is recommended
+	while((!(main_time>1000))&&(!Verilated::gotFinish())){ //here is the loop for simulation,it is recommended
 //	to use random function to generate data signal for full test
-	if(main_time<=30){
+	if(main_time<=300){
 	//number = (rand()%(maxValue - minValue +1)) + minValue;
 	top->i_cmt_ghr = (rand()% (1-0 + 1))+0;
     top->i_cmt_req = (rand()% (1-0 + 1))+0;
     top->i_cmt_ghr_target = (rand()% (1-0 + 1))+0;
 	top->i_cmt_ghr_val = (rand()% (3-0 + 1))+0;
 	top->i_cmt_bits = (rand()% (3-0 + 1))+0;
-	top->i_wb_instr_pc = (rand()% (1023-0 + 1))+0;
+	top->i_wb_instr_pc = (rand()% (501-0 + 1))+0;
 	top->i_wb_cmt_type = (rand()% (7-0 + 1))+0;
-	top->i_wb_cmt_target = (rand()% (1023-0 + 1))+0;
+	top->i_wb_cmt_target = (rand()% (501-0 + 1))+0;
     top->i_pref_pc_vld = 1;
-    top->i_pref_instr_pc = 0x000000FF;
+	if(i%2 == 0){
+	top->i_pref_instr_pc++;
+	}
+	else{
+	top->i_pref_instr_pc = top->i_pref_instr_pc;
+	}
     top->i_pref_instr_vld = 1;
     top->i_mdec_b = 1;
     top->i_mdec_jal = 0;
@@ -96,19 +102,24 @@ int main(){//main simulation here
     top->i_mdec_jalr_ofs = 1; 
 	single_cycle();
 	}
-	else if((main_time>30)&&(main_time<=60))
+	else if((main_time>300)&&(main_time<=600))
 	{
 	top->i_cmt_ghr = (rand()% (1-0 + 1))+0;
     top->i_cmt_req = (rand()% (1-0 + 1))+0;
     top->i_cmt_ghr_target = (rand()% (1-0 + 1))+0;
 	top->i_cmt_ghr_val = (rand()% (3-0 + 1))+0;
 	top->i_cmt_bits = (rand()% (3-0 + 1))+0;
-	top->i_wb_instr_pc = (rand()% (1023-0 + 1))+0;
+	top->i_wb_instr_pc = (rand()% (501-0 + 1))+0;
 	top->i_wb_cmt_type = (rand()% (7-0 + 1))+0;
-	top->i_wb_cmt_target = (rand()% (1023-0 + 1))+0;
+	top->i_wb_cmt_target = (rand()% (501-0 + 1))+0;
     top->i_pref_pc_vld = 1;
-    top->i_pref_instr_pc = 0x000000FF;
     top->i_pref_instr_vld = 1;
+	if(i%2 == 0){
+	top->i_pref_instr_pc++;
+	}
+	else{
+	top->i_pref_instr_pc = top->i_pref_instr_pc;
+	}
     top->i_mdec_b = 0;
     top->i_mdec_jal = 1;
     top->i_mdec_jalr = 0;
@@ -123,13 +134,18 @@ int main(){//main simulation here
     top->i_cmt_ghr_target = (rand()% (1-0 + 1))+0;
 	top->i_cmt_ghr_val = (rand()% (3-0 + 1))+0;
 	top->i_cmt_bits = (rand()% (3-0 + 1))+0;
-	top->i_wb_instr_pc = (rand()% (1023-0 + 1))+0;
+	top->i_wb_instr_pc = (rand()% (501-0 + 1))+0;
 	top->i_wb_cmt_type = (rand()% (7-0 + 1))+0;
-	top->i_wb_cmt_target = (rand()% (1023-0 + 1))+0;
+	top->i_wb_cmt_target = (rand()% (501-0 + 1))+0;
     top->i_pref_pc_vld = 1;
-    top->i_pref_instr_pc = 0x000000FF;
     top->i_pref_instr_vld = 1;
     top->i_mdec_b = 0;
+	if(i%2 == 0){
+	top->i_pref_instr_pc++;
+	}
+	else{
+	top->i_pref_instr_pc = top->i_pref_instr_pc ;
+	}
     top->i_mdec_jal = 0;
     top->i_mdec_jalr = 1;
     top->i_mdec_b_ofs = 1;
@@ -140,6 +156,7 @@ int main(){//main simulation here
 	}
 //eval_and_dump_wave();
 main_time++;
+i++;
 	}
 	sim_exit();
 }

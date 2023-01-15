@@ -28,7 +28,7 @@ module Xcore_if_bim(
 	input					i_cmt_ghr,  // whether the branch is ture or false
 	input					i_cmt_req,	// whether there is a branch information back from wb
 	input	[9:0]			i_cmt_addr, // the update address
-	input   [1:0]           i_cmt_bits, // the update bits (2)
+	input                   i_cmt_bits, // whether the branch is taken or not
 	//output 
 	output  [1:0]			o_bim_bits
 );

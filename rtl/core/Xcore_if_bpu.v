@@ -83,7 +83,7 @@ module Xcore_if_bpu(
 	//check type correction 
     wire btb_vld = (i_btb_type[0]&i_mdec_jalr)
                   | (i_btb_type[1]&i_mdec_jal)
-                  | (i_btb_type[2]&i_mdec_b);
+                  | (i_btb_type[2]&i_mdec_b);  //i_mdec is changing !!!
 	//btb target 
 	wire [`WIDTH] btb_tar = (btb_miss|btb_err) ? bpu_tar: (btb_hit&btb_vld&bpu_en) ? i_btb_target : 'd0;
     // fast path

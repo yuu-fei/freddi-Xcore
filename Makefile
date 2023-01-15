@@ -7,13 +7,13 @@ VERILATOR_FLAGS =  --cc --exe --trace --build  -x-assign 0
 IVERILOG_FLAGS = -o
 #execute the target file
 #you also need to change the obj name!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-OBJ_DIR_RUN = ./obj_dir/VXcore_gshare_bpu
+OBJ_DIR_RUN = ./obj_dir/VXcore_if_pc
 #you should change above!!!
 VVP = vvp -n dump -lxt2
 #set the file set//here you should change the obj_dir !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #remember that all the dependencies should be concluded into the input path
-VERILATOR_INPUT = ./rtl/core/Xcore_gshare_bpu.v
-VERI_SIM_INPUT = ./sim/verilator_sim/gshare_sim.cpp
+VERILATOR_INPUT = ./rtl/core/Xcore_if_pc.v
+VERI_SIM_INPUT = ./sim/verilator_sim/pc_sim.cpp
 IVERILOG_INPUT = ./rtl/core/Xcore_gshare_bpu.v 
 IVER_SIM_INPUT = ./sim/iverilog_sim/gshare_sim.v
 GLOBAL = ./rtl/include/params.v
@@ -45,7 +45,8 @@ clean:
 	$(shell rm -rf dump)
 	$(shell rm -rf dump.vcd)
 	$(shell rm -rf ./obj_dir)
-
+	$(shell rm -rf synth.v)
+	#synth.v ./obj_dir dump.vcd cleaned 
 gtkwave:
 	@$(GTKWAVE) $(GTKWAVE_INPUT)
 
