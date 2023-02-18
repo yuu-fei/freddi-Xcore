@@ -7,13 +7,13 @@ VERILATOR_FLAGS =  --cc --exe --trace --build  -x-assign 0
 IVERILOG_FLAGS = -o
 #execute the target file
 #you also need to change the obj name!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-OBJ_DIR_RUN = ./obj_dir/VXcore_if_pc
+OBJ_DIR_RUN = ./obj_dir/VXcore_if_mdec
 #you should change above!!!
 VVP = vvp -n dump -lxt2
 #set the file set//here you should change the obj_dir !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #remember that all the dependencies should be concluded into the input path
-VERILATOR_INPUT = ./rtl/core/Xcore_if_pc.v
-VERI_SIM_INPUT = ./sim/verilator_sim/pc_sim.cpp
+VERILATOR_INPUT = ./rtl/core/Xcore_if_mdec.v
+VERI_SIM_INPUT = ./sim/verilator_sim/mdec_sim.cpp
 IVERILOG_INPUT = ./rtl/core/Xcore_gshare_bpu.v 
 IVER_SIM_INPUT = ./sim/iverilog_sim/gshare_sim.v
 GLOBAL = ./rtl/include/params.v
@@ -22,7 +22,7 @@ GTKWAVE = gtkwave
 #set gtkwave file
 GTKWAVE_INPUT = dump.vcd
 #yosys synthesis target
-YOSYSFILE = ./rtl/core/Xcore_gshare_bpu.v
+YOSYSFILE = ./rtl/core/Xcore_if_mdec.v
 MODULE = 	Xcore_gshare_bpu
 #you need to change the synthesis target!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #verilator simulation

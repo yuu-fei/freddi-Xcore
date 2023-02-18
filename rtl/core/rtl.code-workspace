@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../../limber-xplor-bim/rtl/core"
+		},
+		{
+			"path": "../../../Templates/vcs+verdi_test"
+		}
+	],
+	"settings": {}
+}
